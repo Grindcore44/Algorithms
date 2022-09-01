@@ -12,30 +12,34 @@ public class VirtualMemory
     public int Alloc(int size)
     {
         var point = 1488;
-        var freeSpace = -1;
+        var freeSpace = 0;
         var realSize = size + 2;
 
         for (int i = 0; i < _data.Length; i++)
         {
-            if (_data[i] == -1)
+            if (_data[i] == -2)
+            {
+                i = (i + 1) + _data[i + 1];
+                freeSpace = 0;
+            }
+            else if (_data[i] == -1)
             {
                 point = i;
                 freeSpace += 1;
                 if (freeSpace == realSize)
                 {
-                    _data[point - realSize] = -2;
-                    _data[(point + 1) - realSize] = size;
-                    return point - size;
+                    _data[point - (realSize - 1)] = -2;
+                    _data[(point + 1) - (realSize - 1)] = size;
+                    return point + 1 - size;
                 }
             }
-            if (_data[i] != -1 && point != 1488)
-            {
-                point = 1488;
-                freeSpace = 0;
-            }
+            //else if (_data[i] != -1 && point != 1488)
+            //{
+            //    point = 1488;
+            //    freeSpace = 0;
+            //}
         }
-        throw new IndexOutOfRangeException();
-        return point;
+        throw new OutOfMemoryException();
     }
     //public int Alloc(int size)
     //{
@@ -123,8 +127,10 @@ public class VirtualMemory
     {
         for (int i = 0; i < _data.Length; i++)
         {
+            Console.Write(i);
+            Console.Write('|');
             Console.WriteLine(_data[i]);
+           
         }
-
     }
 }

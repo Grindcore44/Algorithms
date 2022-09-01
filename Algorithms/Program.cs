@@ -10,8 +10,13 @@ public static class Program
         var head = CreateNewLinkedList(virtualMemory, 100);
 
         AddNewNodeInTail(virtualMemory, head, 200);
-
-
+        AddNewNodeInTail(virtualMemory, head, 300);
+        AddNewNodeInTail(virtualMemory, head, 400);
+        virtualMemory.Alloc(1);
+        virtualMemory.Alloc(2);
+        virtualMemory.Alloc(3);
+        virtualMemory.Alloc(4);
+        virtualMemory.Alloc(7);
         virtualMemory.WriteLineDataConsole();
     }
     // -3 == null
@@ -39,9 +44,7 @@ public static class Program
             }
             nextNodePoint = tempNodePoint;
         }
-
         var newNode = virtualMemory.Alloc(2);
-
         virtualMemory.SetData(newNode, 0, value);
         virtualMemory.SetData(newNode, 1, -3);
         virtualMemory.SetData(nextNodePoint, 1, newNode);
