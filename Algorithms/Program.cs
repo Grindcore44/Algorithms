@@ -10,13 +10,17 @@ public static class Program
         var head = CreateNewLinkedList(virtualMemory, 100);
 
         AddNewNodeInTail(virtualMemory, head, 200);
-        AddNewNodeInTail(virtualMemory, head, 300);
-        AddNewNodeInTail(virtualMemory, head, 400);
         virtualMemory.Alloc(1);
-        virtualMemory.Alloc(2);
         virtualMemory.Alloc(3);
+        AddNewNodeInTail(virtualMemory, head, 400);
+        virtualMemory.Alloc(2);
+        AddNewNodeInTail(virtualMemory, head, 300);
         virtualMemory.Alloc(4);
+        AddNewNodeInTail(virtualMemory, head, 500);
         virtualMemory.Alloc(7);
+
+        head = DeleteNodeByIndex(virtualMemory, head, 0);
+        head = DeleteNodeByIndex(virtualMemory, head, 3);
         virtualMemory.WriteLineDataConsole();
     }
     // -3 == null
@@ -33,7 +37,7 @@ public static class Program
     public static void AddNewNodeInTail(VirtualMemory virtualMemory, int headNodePoint, int value)
     {
         var nextNodePoint = headNodePoint;
-        
+
         while (true)
         {
             var tempNodePoint = virtualMemory.GetData(nextNodePoint, 1);
@@ -49,7 +53,48 @@ public static class Program
         virtualMemory.SetData(newNode, 1, -3);
         virtualMemory.SetData(nextNodePoint, 1, newNode);
     }
+
+
+    public static int DeleteNodeByIndex(VirtualMemory virtualMemory, int headNodePoint, int index)
+    {
+        if (index == 0)
+        {
+            int newHeadPoint = virtualMemory.GetData(headNodePoint, 1);
+            virtualMemory.Free(headNodePoint);
+            return newHeadPoint;
+        }
+        else
+        {
+            var tempNodePoint = headNodePoint;
+            int nextNodePoint;
+            int previousNodePoint = 0;
+            int deletedNodeNext = 0;
+            for (int i = 0; i < index + 1; i++)
+            {
+                nextNodePoint = virtualMemory.GetData(tempNodePoint, 1);
+                if (i + 1 == index)
+                {
+                    previousNodePoint = tempNodePoint;
+                }
+
+                tempNodePoint = nextNodePoint;
+
+                if (i == index)
+                {
+                    if (nextNodePoint == -3)
+                    {
+                        virtualMemory.SetData(previousNodePoint, 1, -3);
+                        return headNodePoint;
+                    }
+                    deletedNodeNext = nextNodePoint;
+                }
+            }
+            virtualMemory.SetData(previousNodePoint, 1, deletedNodeNext);
+            return headNodePoint;
+        }
+    }
 }
+
 
 public class LinkedListElement
 {

@@ -33,58 +33,12 @@ public class VirtualMemory
                     return point + 1 - size;
                 }
             }
-            //else if (_data[i] != -1 && point != 1488)
-            //{
-            //    point = 1488;
-            //    freeSpace = 0;
-            //}
         }
         throw new OutOfMemoryException();
     }
-    //public int Alloc(int size)
-    //{
-    //    var point = -1;
-    //    var havePotentialSpace = false;
-    //    var freeSpace = 0;
-    //    var realSize = size + 2;
 
-    //    for (int i = 0; i < _data.Length; i++)
-    //    {
-    //        if (_data[i] == -1 && havePotentialSpace == false)
-    //        {
-    //            havePotentialSpace = true;
-    //            freeSpace += 1;
-    //            point = i;
-    //        }
-    //        else if (_data[i] == -1 && havePotentialSpace)
-    //        {
-    //            freeSpace += 1;
-    //        }
-    //        else if (_data[i] != -1 && havePotentialSpace)
-    //        {
-    //            havePotentialSpace = false;
-    //            freeSpace = 0;
-    //            point = -1;
-    //        }
 
-    //        if (freeSpace == realSize)
-    //        {
-    //            _data[point] = -2;
-    //            _data[point + 1] = size;
 
-    //            var actualPoint = point + 2;
-
-    //            for (int j = 0; j < size; j++)
-    //            {
-    //                _data[actualPoint + j] = 0;
-    //            }
-
-    //            return actualPoint;
-    //        }
-    //    }
-
-    //    return point;
-    //}
     public void Free(int point)
     {
         var offset = _data[point - 1] - 1;
@@ -130,7 +84,7 @@ public class VirtualMemory
             Console.Write(i);
             Console.Write('|');
             Console.WriteLine(_data[i]);
-           
+
         }
     }
 }
